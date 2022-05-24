@@ -1,19 +1,29 @@
 package br.com.confeitaria.confeitaria.controller;
 
 import br.com.confeitaria.confeitaria.domain.Usuario;
+import br.com.confeitaria.confeitaria.service.UsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+import javax.validation.Valid;
 
+@RestController
+@RequestMapping("/larissinha")
 public class UsuarioController {
 
-    public Usuario criarUsuario(){
-        Usuario user = Usuario.builder()
-                .nome("Larissa")
-                .dataNascimento(LocalDate.of(1993, 03, 07))
-                .email("larissa_rosa7@hotmail.com")
-                .endereco("Rua Garibaldi, 1231/404")
-                .senha("marshmallows")
-                .telefone("513981065087").build();
+    @Autowired
+    UsuarioService usuarioService;
 
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public void criarUsuario(@RequestBody @Valid Usuario usuario){
+        usuarioService.criarUsuario(usuario.getNome(), usuario.getDataNascimento(), usuario.getEndereco(), usuario.getTelefone(), usuario.getEmail(), usuario.getSenha());
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public Usuario listarUsuario(){
+        return usuarioService.listarUsuario();
     }
 }

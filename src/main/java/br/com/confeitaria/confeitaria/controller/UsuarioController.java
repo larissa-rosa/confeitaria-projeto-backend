@@ -7,9 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
-@RequestMapping("/larissinha")
+@RequestMapping("/usuarios")
 public class UsuarioController {
 
     @Autowired
@@ -23,7 +24,8 @@ public class UsuarioController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Usuario listarUsuario(){
-        return usuarioService.listarUsuario();
+    public List<Usuario> listarUsuario(){
+
+        return usuarioService.listarUsuarios();
     }
 }
